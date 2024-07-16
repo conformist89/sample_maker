@@ -11,24 +11,37 @@ for i in data["2018"]:
 
 def get_nickname(inp_str):
 
+    data_units = ["Tau", 'EGamma', 'SingleMuon',
+                  'DoubleMuon', ]
+
     if inp_str.find("\n") == -1:
         first_part = inp_str.split("/")[1]
         second_part = inp_str.split("/")[2]
 
-        pos = second_part.find('X')
-        
-        third_part = second_part[:pos + 1]
+        if first_part not in data_units:
 
-        return first_part + third_part
+            pos = second_part.find('X')
+            
+            third_part = second_part[:pos + 1]
+
+            return first_part + third_part
+        else:
+            mn = second_part.find("MiniAO")
+            return first_part + second_part[:mn-1]
     else:
         first_part = inp_str.split("\n")[1]
         second_part = inp_str.split("\n")[2]
 
-        pos = second_part.find('X')
-        
-        third_part = second_part[:pos + 1]
+        if first_part not in data_units:
 
-        return first_part + third_part
+            pos = second_part.find('X')
+            
+            third_part = second_part[:pos + 1]
+
+            return first_part + third_part
+        else:
+            mn = second_part.find("MiniAO")
+            return first_part+second_part[:mn-1]
 
 def get_folder_name(inp_str):
     pos = inp_str.find('TuneCP5')
