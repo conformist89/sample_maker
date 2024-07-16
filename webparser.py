@@ -9,6 +9,36 @@ html_files = []
 for i in data["2018"]:
     html_files.append(i)
 
+def get_nickname(inp_str):
+
+    if inp_str.find("\n") == -1:
+        first_part = inp_str.split("/")[1]
+        second_part = inp_str.split("/")[2]
+
+        pos = second_part.find('X')
+        
+        third_part = second_part[:pos + 1]
+
+        return first_part + third_part
+    else:
+        first_part = inp_str.split("\n")[1]
+        second_part = inp_str.split("\n")[2]
+
+        pos = second_part.find('X')
+        
+        third_part = second_part[:pos + 1]
+
+        return first_part + third_part
+
+def get_folder_name(inp_str):
+    pos = inp_str.find('TuneCP5')
+
+    if inp_str.startswith("/\n"):
+        return inp_str[2:pos-1]
+
+    return inp_str[:pos-1]
+
+
 
 for fullpath in html_files:
     
@@ -16,6 +46,7 @@ for fullpath in html_files:
         soup = BeautifulSoup(html_file, 'lxml')
 
         dataset_info = []
+        dataset_dict = {}
 
         # Extract data from each row
         rows = soup.select('.jsgrid-table tbody tr.jsgrid-row, .jsgrid-table tbody tr.jsgrid-alt-row')
@@ -25,10 +56,12 @@ for fullpath in html_files:
             num_files = int(columns[3].text.strip())
             num_selected_events = int(columns[4].text.strip())
             dataset_info.append((dataset_name, num_files, num_selected_events))
+            dataset_dict["era"] = "2018"
+            dataset_dict["dbs"] = "/sample/not/published"
+            dataset_dict["generator_weight"] = 1.0
+            dataset_dict["nevents"] = num_selected_events
+            dataset_dict["nfiles"] = num_files
+            dataset_dict["nick"] = get_nickname(dataset_name)
+            # dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(dataset_name)+"nanoHTT_"+str(i)+".root" for i in num_files]
 
-        # Print dataset information
-        for name, files, events in dataset_info:
-            print(f"Dataset Name: {name}")
-            print(f"Number of Files: {files}")
-            print(f"Number of Selected Events: {events}")
-            print("=" * 20)
+            print(dataset_dict)
