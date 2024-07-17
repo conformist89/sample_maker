@@ -31,10 +31,10 @@ def get_nickname(inp_str):
         
         third_part = second_part[:pos + 1]
 
-        return first_part + third_part
+        return first_part + third_part.replace("MiniAODv2", "NanoAODv12")
     else:
         mn = second_part.find("MiniAO")
-        return first_part + second_part[:mn-1]
+        return first_part + second_part[:mn-1].replace("MiniAODv2", "NanoAODv12")
 
 
 def get_folder_name(inp_str):
