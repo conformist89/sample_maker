@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import json
 import argparse
+import os
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Parse HTML files from the CMS DAS website')
@@ -25,16 +26,24 @@ def get_nickname(inp_str):
     first_part = inp_str.split("/")[1]
     second_part = inp_str.split("/")[2]
 
+    nicknm = ""
+
     if first_part not in data_units:
 
         pos = second_part.find('X')
         
         third_part = second_part[:pos + 1]
 
-        return first_part + third_part.replace("MiniAODv2", "NanoAODv12")
+        nicknm = first_part + third_part.replace("MiniAODv2", "NanoAODv12")
+
+        # return first_part + third_part.replace("MiniAODv2", "NanoAODv12")
     else:
         mn = second_part.find("MiniAO")
-        return first_part + second_part[:mn-1].replace("MiniAODv2", "NanoAODv12")
+        nicknm = first_part + second_part[:mn-1].replace("MiniAODv2", "NanoAODv12")
+
+    if "ext1" in inp_str:
+        nicknm += "_ext1"
+    return nicknm
 
 
 def get_folder_name(inp_str):
@@ -45,6 +54,52 @@ def get_folder_name(inp_str):
 
     return inp_str[:pos-1]
 
+
+def get_xsec(sampledatabase_path, era):
+
+    sample_typer = {
+        'data' : ['SingleMuon', 'SingleElectron', 'EGamma', 'DoubleMuon', 'MuonEG', 'DoubleEG', ],
+        'diboson': ['WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo4L_TuneCP5_13TeV_powheg_pythia8'],
+        
+        'ttbar' : ['TTTo2L2Nu', 'TTToHadronic', 'TTToSemiLeptonic'],
+        
+        'singletop' : ['ST_t-channel_antitop_4f_InclusiveDecays', 'ST_t-channel_top_4f_InclusiveDecays', 'ST_tW_antitop_5f_inclusiveDecays', 'ST_tW_top_5f_inclusiveDecays'],
+        
+        'wjets' : ['WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8', 'WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8', 'WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8',
+                   'WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia', 'WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8', 'WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8',
+                   'WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8', 'WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8', 'WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8',
+                   'WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8','TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8', 
+                   'WJetsToLNu_0J_TuneCP5_13TeV-amcatnloFXFX-pythia8','WJetsToLNu_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8', 'WJetsToLNu_2J_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                   ],
+        'dyjets' : ['DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8', 'DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8', 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                    'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8', 'DYJetsToLL_M-500to700_TuneCP5_13TeV-amcatnloFXFX-pythia8']
+    }
+    xsec = {}
+    for key, value in sample_typer.items():
+
+        directory = os.fsencode(sampledatabase_path+era+"/"+key)
+    
+        for file in os.listdir(directory):
+            filename = os.fsdecode(file)
+            f = open(sampledatabase_path+era+"/"+key+"/"+filename)
+            data = json.load(f)
+
+            for v in value:
+                if v in data['nick']:
+                    xsec[v] = data['xsec']
+
+    return xsec
+
+prefix = "/work/olavoryk/king_maker_setup/boosted_setup_upd/KingMaker/sample_database/"
+xsec_dict = get_xsec(prefix, args.era)
+
+def sample_xsec(sample_name, xsec_dict):
+    xs = 1.0
+    for key, value in xsec_dict.items():
+        if key in sample_name:
+            xs = value
+            break
+    return xs
 
 def sample_typer(inp_str):
 
@@ -95,6 +150,7 @@ for fullpath in html_files:
                 dataset_dict["nfiles"] = num_files
                 dataset_dict["nick"] = get_nickname(dataset_name)
                 dataset_dict["sample_type"] = sample_type
+                dataset_dict["xsec"] = sample_xsec(dataset_name, xsec_dict)
                 # dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(dataset_name)+"nanoHTT_"+str(i)+".root" for i in num_files]
 
                 print(dataset_dict)
