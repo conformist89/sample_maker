@@ -1,12 +1,18 @@
 from bs4 import BeautifulSoup
 import json
+import argparse
+
+# Parse arguments
+parser = argparse.ArgumentParser(description='Parse HTML files from the CMS DAS website')
+parser.add_argument("era", help="Run 2 data taking period", type=str)
+args = parser.parse_args()
 
 f = open('config.json')
 data = json.load(f)
 
 html_files = []
 
-for i in data["2018"]:
+for i in data[args.era]:
     html_files.append(i)
 
 def get_nickname(inp_str):
@@ -57,7 +63,7 @@ for fullpath in html_files:
             num_files = int(columns[3].text.strip())
             num_selected_events = int(columns[4].text.strip())
             dataset_info.append((dataset_name, num_files, num_selected_events))
-            dataset_dict["era"] = "2018"
+            dataset_dict["era"] = args.era
             dataset_dict["dbs"] = "/sample/not/published"
             dataset_dict["generator_weight"] = 1.0
             dataset_dict["nevents"] = num_selected_events
