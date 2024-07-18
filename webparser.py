@@ -105,15 +105,18 @@ def sample_typer(inp_str):
 
     inp_str = inp_str.replace('\n', '')
     sample_typer = {
-
         'data' : ['SingleMuon', 'SingleElectron', 'EGamma', 'DoubleMuon', 'MuonEG', 'DoubleEG', ],
-        'diboson' : ['WZTo2Q2L', 'WZTo3LNu', 'ZZTo2Q2L', 'ZZTo4L'],
-        'singletop' : ['ST_t-channel_antitop_4f_InclusiveDecays', 'ST_t-channel_top_4f_InclusiveDecays', 'ST_tW_antitop_5f_inclusiveDecays', 'ST_tW_top_5f_inclusiveDecays'],
+        'diboson': ['WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo4L_TuneCP5_13TeV_powheg_pythia8'],
+        
         'ttbar' : ['TTTo2L2Nu', 'TTToHadronic', 'TTToSemiLeptonic'],
-        'wjets' : ['WJetsToLNu'],
-        'dyjets' : ['DYJetsToLL_M-10to50', 'DYJetsToLL_M-50'],
-
+        
+        'singletop' : ['ST_t-channel_antitop_4f_InclusiveDecays', 'ST_t-channel_top_4f_InclusiveDecays', 'ST_tW_antitop_5f_inclusiveDecays', 'ST_tW_top_5f_inclusiveDecays'],
+        
+        'wjets' : ['WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8', 'WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8', ],
+        'dyjets' : ['DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8', 'DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8', 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                    'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8']
     }
+        
 
     sample_type = 'unknown'
     for key, value in sample_typer.items():
