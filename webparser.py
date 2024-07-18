@@ -93,6 +93,11 @@ def get_folder_name(nickname):
         'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X':"DYJetsToLL_M-50-amcatnloFXFX",
         'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X' :"DYJetsToLL_M-50-madgraphMLM",
         'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X_ext1' :"DYJetsToLL_M-50-madgraphMLM_ext1",
+
+        'DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12'  : 'DYJetsToLL_LHEFilterPtZ-100To250-amcatnloFXFX',
+        'DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12' : 'DYJetsToLL_LHEFilterPtZ-250To400-amcatnloFXFX', 
+        'DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12' : 'DYJetsToLL_LHEFilterPtZ-400To650-amcatnloFXFX',
+        'DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18MiniAODv2-106X' : 'DYJetsToLL_LHEFilterPtZ-650ToInf-amcatnloFXFX', 
     }
 
     fold = 'folder'
@@ -163,7 +168,13 @@ def sample_typer(inp_str):
         
         'wjets' : ['WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8', 'WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8', ],
         'dyjets' : ['DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8', 'DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8', 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8',
-                    'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8']
+                    'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8',
+                    'DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                    'DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                    'DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                    'DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8',
+                    
+                    ]
     }
         
 
