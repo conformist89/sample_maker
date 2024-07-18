@@ -177,6 +177,26 @@ def sample_typer(inp_str):
     return sample_type     
 
 
+def create_folder_structure(base_folder, sub_folder):
+    try:
+        # Create the base folder if it doesn't exist
+        if not os.path.exists(base_folder):
+            os.mkdir(base_folder)
+            print(f"Folder '{base_folder}' created.")
+        else:
+            print(f"Folder '{base_folder}' already exists.")
+
+        # Create the subfolder inside the base folder
+        sub_folder_path = os.path.join(base_folder, sub_folder)
+        if not os.path.exists(sub_folder_path):
+            os.mkdir(sub_folder_path)
+            print(f"Subfolder '{sub_folder}' created inside '{base_folder}'.")
+        else:
+            print(f"Subfolder '{sub_folder}' already exists inside '{base_folder}'.")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 for fullpath in html_files:
     
     with open(fullpath) as html_file:
@@ -203,6 +223,13 @@ for fullpath in html_files:
                 dataset_dict["nick"] = get_nickname(dataset_name)
                 dataset_dict["sample_type"] = sample_type
                 dataset_dict["xsec"] = sample_xsec(dataset_name, xsec_dict)
-                # dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(dataset_name)+"nanoHTT_"+str(i)+".root" for i in range(num_files)]
-                dataset_dict["filelist"] = get_folder_name(get_nickname(dataset_name))
-                print(dataset_dict)
+                dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(get_nickname(dataset_name))+"nanoHTT_"+str(i)+".root" for i in range(num_files)]
+                
+                create_folder_structure("/work/olavoryk/helper_files/sample_maker/"+args.era, sample_type)
+
+                # Write the dictionary to a JSON file
+                with open("/work/olavoryk/helper_files/sample_maker/"+args.era+'/'+sample_type+'/'+get_nickname(dataset_name)+'.json', 'w') as file:
+                    json.dump(dataset_dict, file, indent=4)
+                
+                # dataset_dict["filelist"] = get_folder_name(get_nickname(dataset_name))
+                # print(dataset_dict)
