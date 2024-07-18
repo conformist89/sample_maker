@@ -46,19 +46,68 @@ def get_nickname(inp_str):
     return nicknm
 
 
-def get_folder_name(inp_str):
-    pos = inp_str.find('TuneCP5')
+def get_folder_name(nickname):
 
-    if inp_str.startswith("/\n"):
-        return inp_str[2:pos-1]
 
-    return inp_str[:pos-1]
+    fold_dict = {
+
+        'SingleMuonRun2018A-UL2018' : "SingleMuon_Run2018A",
+        'SingleMuonRun2018B-UL2018' : "SingleMuon_Run2018B",
+        'SingleMuonRun2018C-UL2018' : "SingleMuon_Run2018C",
+        'SingleMuonRun2018D-UL2018' : "SingleMuon_Run2018D",
+
+        "EGammaRun2018A-UL2018" : "EGamma_Run2018A",
+        "EGammaRun2018B-UL2018" : "EGamma_Run2018B",
+        "EGammaRun2018C-UL2018" : "EGamma_Run2018C",
+        "EGammaRun2018D-UL2018" : "EGamma_Run2018D",
+
+        "DoubleMuonRun2018A-UL2018": "DoubleMuon_Run2018A",
+        "DoubleMuonRun2018B-UL2018": "DoubleMuon_Run2018B",
+        "DoubleMuonRun2018C-UL2018": "DoubleMuon_Run2018C",
+        "DoubleMuonRun2018D-UL2018": "DoubleMuon_Run2018D",
+
+        'WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X' : "WZTo2Q2L", 
+        'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X' : 'WZTo3LNu',
+        'ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X' : 'ZZTo2Q2L',
+        'ZZTo4L_TuneCP5_13TeV_powheg_pythia8RunIISummer20UL18NanoAODv12-106X' : 'ZZTo4L', 
+
+
+        'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X' : 'TTTo2L2Nu',
+        'TTToHadronic_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X' : 'TTToHadronic',
+        'TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X' : 'TTToSemiLeptonic',
+
+        'ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8RunIISummer20UL18NanoAODv12-106X' : 'ST_t-channel_antitop_4f_InclusiveDecays',
+        'ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8RunIISummer20UL18NanoAODv12-106X' : 'ST_t-channel_antitop_4f_InclusiveDecays_erdON', 
+        'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8RunIISummer20UL18NanoAODv12-106X' : 'ST_t-channel_top_4f_InclusiveDecays', 
+        'ST_t-channel_top_4f_InclusiveDecays_TuneCP5_erdON_13TeV-powheg-madspin-pythia8RunIISummer20UL18NanoAODv12-106X' : 'ST_t-channel_top_4f_InclusiveDecays_erdON',
+
+        'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X'  :"ST_tW_antitop_5f_InclusiveDecays",
+        'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X':"ST_tW_top_5f_InclusiveDecays",
+
+        'WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X' : 'WJetsToLNu',
+        'WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X': 'WJetsToLNu-amcatnloFXFX',
+
+
+        'DYJetsToLL_M-10to50_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X'    :"DYJetsToLL_M-10to50-amcatnloFXFX",
+        'DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X' :"DYJetsToLL_M-10to50-madgraphMLM",
+        'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X':"DYJetsToLL_M-50-amcatnloFXFX",
+        'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X' :"DYJetsToLL_M-50-madgraphMLM",
+        'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X_ext1' :"DYJetsToLL_M-50-madgraphMLM_ext1",
+    }
+
+    fold = 'folder'
+
+    for key, value in fold_dict.items():
+        if key == nickname:
+            fold = value
+
+    return fold
 
 
 def get_xsec(sampledatabase_path, era):
 
     sample_typer = {
-        'data' : ['SingleMuon', 'SingleElectron', 'EGamma', 'DoubleMuon', 'MuonEG', 'DoubleEG', ],
+        'data' : ['SingleMuon', 'EGamma', 'DoubleMuon',  ],
         'diboson': ['WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo4L_TuneCP5_13TeV_powheg_pythia8'],
         
         'ttbar' : ['TTTo2L2Nu', 'TTToHadronic', 'TTToSemiLeptonic'],
@@ -105,7 +154,7 @@ def sample_typer(inp_str):
 
     inp_str = inp_str.replace('\n', '')
     sample_typer = {
-        'data' : ['SingleMuon', 'SingleElectron', 'EGamma', 'DoubleMuon', 'MuonEG', 'DoubleEG', ],
+        'data' : ['SingleMuon', 'EGamma', 'DoubleMuon', ],
         'diboson': ['WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX', 'ZZTo4L_TuneCP5_13TeV_powheg_pythia8'],
         
         'ttbar' : ['TTTo2L2Nu', 'TTToHadronic', 'TTToSemiLeptonic'],
@@ -154,6 +203,6 @@ for fullpath in html_files:
                 dataset_dict["nick"] = get_nickname(dataset_name)
                 dataset_dict["sample_type"] = sample_type
                 dataset_dict["xsec"] = sample_xsec(dataset_name, xsec_dict)
-                # dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(dataset_name)+"nanoHTT_"+str(i)+".root" for i in num_files]
-
+                # dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(dataset_name)+"nanoHTT_"+str(i)+".root" for i in range(num_files)]
+                dataset_dict["filelist"] = get_folder_name(get_nickname(dataset_name))
                 print(dataset_dict)
