@@ -94,10 +94,10 @@ def get_folder_name(nickname):
         'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X' :"DYJetsToLL_M-50-madgraphMLM",
         'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X_ext1' :"DYJetsToLL_M-50-madgraphMLM_ext1",
 
-        'DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12'  : 'DYJetsToLL_LHEFilterPtZ-100To250-amcatnloFXFX',
-        'DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12' : 'DYJetsToLL_LHEFilterPtZ-250To400-amcatnloFXFX', 
-        'DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12' : 'DYJetsToLL_LHEFilterPtZ-400To650-amcatnloFXFX',
-        'DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18MiniAODv2-106X' : 'DYJetsToLL_LHEFilterPtZ-650ToInf-amcatnloFXFX', 
+        'DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X'  : 'DYJetsToLL_LHEFilterPtZ-100To250-amcatnloFXFX',
+        'DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X' : 'DYJetsToLL_LHEFilterPtZ-250To400-amcatnloFXFX', 
+        'DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X' : 'DYJetsToLL_LHEFilterPtZ-400To650-amcatnloFXFX',
+        'DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X' : 'DYJetsToLL_LHEFilterPtZ-650ToInf-amcatnloFXFX', 
     }
 
     fold = 'folder'
@@ -234,7 +234,7 @@ for fullpath in html_files:
                 dataset_dict["nick"] = get_nickname(dataset_name)
                 dataset_dict["sample_type"] = sample_type
                 dataset_dict["xsec"] = sample_xsec(dataset_name, xsec_dict)
-                dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1"+"Run2_2018"+get_folder_name(get_nickname(dataset_name))+"nanoHTT_"+str(i)+".root" for i in range(num_files)]
+                dataset_dict["filelist"] = ["root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1/"+"Run2_2018/"+get_folder_name(get_nickname(dataset_name))+"/"+"nanoHTT_"+str(i)+".root" for i in range(num_files)]
                 
                 create_folder_structure("/work/olavoryk/helper_files/sample_maker/"+args.era, sample_type)
 
